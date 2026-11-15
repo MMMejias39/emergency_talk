@@ -31,6 +31,14 @@ A proposta **já tem implementação madura e de código aberto** — o [bitchat
 
 Vá direto ao [`kit-emergencia.md`](kit-emergencia.md). **Compilar não é requisito para usar** — e a preparação precisa ser feita **antes** da emergência, porque instalar um aplicativo durante o apagão pode simplesmente não funcionar.
 
+## Licença — livre, e feito para continuar livre
+
+Os documentos deste repositório estão sob **[CC BY-SA 4.0](LICENSE)** (Atribuição-CompartilhaIgual). Código que venha a ser adicionado será licenciado sob **GPL-3.0**.
+
+**Por que copyleft, e não domínio público.** Isto trata de comunicação de emergência — segurança pública. Seria desonesto prometer que uma licença proíbe cobrança: **nenhuma licença livre faz isso**, nem a GPL. O que o copyleft garante é outra coisa, e é a que importa: **toda derivação precisa continuar aberta**. Ninguém pode pegar este trabalho, fechar e vender uma versão proprietária que as pessoas passem a depender e não possam inspecionar. Uma versão livre sempre existirá, e qualquer melhoria feita em cima volta para o comum.
+
+Use, copie, adapte, traduza, imprima e distribua à vontade — inclusive por pendrive, em papel, ou dentro de um aplicativo. As únicas exigências são manter a atribuição e licenciar as derivações sob os mesmos termos.
+
 ## Aviso
 
 Este estudo **não** substitui o canal oficial de alerta. No Brasil, o **Defesa Civil Alerta** (Cell Broadcast) entrega aviso direto ao celular na área de risco, sem aplicativo e sem cadastro. O que está aqui trata do caso oposto: comunicação lateral, entre pessoas, quando não há rede alguma.
