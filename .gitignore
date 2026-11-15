@@ -1,0 +1,13 @@
+# Clone do upstream bitchat-android — referência de trabalho, não parte deste repositório.
+# Obtenha com:
+#   git clone --depth 1 https://github.com/permissionlesstech/bitchat-android
+bitchat-android/
+
+# Toolchain e artefatos locais
+local.properties
+.gradle/
+build/
+*.apk
+*.aab
+*.keystore
+*.jks
