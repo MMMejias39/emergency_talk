@@ -161,7 +161,7 @@ O canal oficial de alerta à população é o **Defesa Civil Alerta**, sobre **C
 | **Latência** em malha multi-salto | O SWARNET reporta só vazão e perda de pacotes; sem latência não se dimensiona nem PTT gravado |
 | **Mobilidade e falha de relay** | Todo o testbed do SWARNET é estático, indoor, cinco aparelhos **idênticos** (Galaxy A10s), em proximidade. Não captura mobilidade, interferência nem queda de nó |
 | **Heterogeneidade de fabricante/chipset** | A lição do Serval é justamente essa: a interoperabilidade entre vendors é onde esse tipo de projeto morre |
-| **Alcance real por salto** | O whitepaper do bitchat não especifica alcance de rádio nem número máximo de pares |
+| **Alcance real por salto** | Continua sem medição. Nem o whitepaper, nem a documentação, nem o código declaram alcance em metros. O que o código define é o **teto de saltos e os limiares de RSSI** — ver §10 |
 | **Escala** | Nenhuma fonte do levantamento mede malha além de poucas dezenas de nós |
 
 ---
@@ -177,6 +177,39 @@ O canal oficial de alerta à população é o **Defesa Civil Alerta**, sobre **C
 > **Encaminhamento (nov/2026):** os passos 1 e 4 foram resolvidos. A semântica adotada é **PTT com áudio gravado**, e a decisão de reuso é **fork do `bitchat-android`** (domínio público/Unlicense). Ver:
 > - [`kit-emergencia.md`](kit-emergencia.md) — solução pronta para uso hoje, com preparação pré-crise
 > - [`plano-fork.md`](plano-fork.md) — escopo do fork, pré-requisitos de build e fases de validação
+
+---
+
+## 10. Alcance — o que o código determina
+
+Levantado em 2026-11-14 diretamente no fonte do `bitchat-android`. **Nenhuma fonte declara alcance em metros**; o que existe são os dois parâmetros que o governam.
+
+### Saltos: teto de 7
+
+`AppConstants.MESSAGE_TTL_HOPS = 7`, idêntico para a malha BLE e para a Wi-Fi Aware (`WifiAwareMeshService.MAX_TTL = 7u`). O PTT ao vivo usa o mesmo 7, limitado a 5 em malha com mais de seis pares.
+
+### Sensibilidade: varia com a bateria
+
+`PowerManager` descarta pares abaixo de um limiar de RSSI que **muda conforme o estado de energia** — e o limiar é o que define, na prática, até que distância um vizinho ainda "existe":
+
+| Modo | Potência de anúncio | Limiar RSSI | Quando é escolhido |
+|---|---|---|---|
+| `PERFORMANCE` | HIGH | **−95 dBm** | **Só carregando** |
+| `BALANCED` | MEDIUM | **−85 dBm** | Primeiro plano, bateria > 20% |
+| `POWER_SAVER` | LOW | **−75 dBm** | Bateria ≤ 20%, ou app em segundo plano |
+| `ULTRA_LOW_POWER` | ULTRA_LOW | **−65 dBm** | Bateria ≤ 10% |
+
+Limiares de bateria: `LOW_BATTERY_PERCENT = 20`, `CRITICAL_BATTERY_PERCENT = 10`.
+
+**Consequência para o cenário de apagão:** o alcance **encolhe conforme a emergência se arrasta**. Um aparelho a 8% de bateria, com a tela apagada, só enxerga vizinhos muito próximos. E o modo de maior alcance é acessível **apenas carregando** — o que faz do power bank não um conforto, mas o que destrava o alcance máximo.
+
+Não há uso de **LE Coded PHY** (o modo *long range* do Bluetooth 5): a implementação usa anúncio e varredura convencionais. Não existe, portanto, modo de alcance estendido a ativar.
+
+### O que isso dá de alcance total
+
+Alcance = (alcance por salto) × (saltos) — **e só se houver gente formando a corrente**. Esse é o ponto que a intuição erra: a cobertura não é propriedade do aplicativo, é **propriedade da multidão**. Sete saltos não cobrem um bairro se não houver uma pessoa com o app a cada trecho. Em malha esparsa, cada par precisa estar em alcance direto.
+
+A dimensão que escapa a essa conta é o **tempo**: com *store-and-forward*, uma pessoa que caminha carrega as mensagens consigo. Geograficamente o alcance deixa de ter limite; o custo vira latência na velocidade de quem anda.
 
 ---
 

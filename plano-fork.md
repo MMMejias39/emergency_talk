@@ -189,6 +189,31 @@ Cada número desses preenche uma linha da tabela de lacunas de `contexto.md` §8
 
 ---
 
+## 4-A. Alcance: o maior ganho técnico disponível no fork
+
+### LE Coded PHY — não usado, e é a maior alavanca
+
+Verificado no fonte (2026-11-14): o app usa **apenas advertising legado**. Não há `AdvertisingSet`, `setPrimaryPhy`, `setSecondaryPhy` nem `isLeCodedPhySupported` em lugar algum — portanto roda **só em 1M PHY**.
+
+O **LE Coded PHY com S=8** do Bluetooth 5 entrega **≈ +12 dB de orçamento de enlace, equivalente a ~4× o alcance**, ao custo de **8× o tempo no ar** ([TI](https://software-dl.ti.com/lprf/simplelink_cc26x2_latest/docs/ble5stack/ble_user_guide/html/ble-stack-5.x/phy-coded.html), [Hubble](https://hubble.com/community/guides/how-ble-coded-phy-s-8-achieves-4x-range-at-the-cost-of-8x-airtime/)). A API existe desde **API 26** — o mesmo `minSdk` do projeto.
+
+**Por que isso encaixa exatamente neste caso de uso:** o preço do Coded PHY é vazão, e o requisito aceito é **texto e voz gravada**. Mensagem e arquivo toleram 8× de tempo no ar; não há prazo. **É a troca certa — mas só para esse tráfego.**
+
+### O que não cabe junto
+
+- **PTT ao vivo é incompatível** com Coded PHY. O `LIVE_VOICE_V1` dimensiona cada pacote em 210 bytes para caber em 64 ms de áudio; multiplicar o tempo no ar por 8 destrói esse orçamento. O fork teria de **escolher o PHY por tipo de tráfego**, ou expor "modo longo alcance" que desliga o ao vivo.
+- **Interoperabilidade:** quem anuncia só em Coded PHY fica **invisível** para scanner 1M. Exigiria anunciar nos dois, ou negociar — e romper com a base instalada custa justamente o que dá valor à malha.
+- **Suporte desigual:** `isLeCodedPhySupported()` precisa ser consultado em tempo de execução. Nem todo aparelho de 2020 tem. Precisa de degradação graciosa.
+- **Bateria:** 8× de tempo no ar é mais rádio ligado. Tensão direta com a Fase 1. **Medir, não supor.**
+
+### Modo emergência: fixar `PERFORMANCE`
+
+Mudança pequena e de ganho imediato. Hoje o `PowerManager` só escolhe `PERFORMANCE` (limiar −95 dBm, TX HIGH) **quando carregando**; sem carga cai para −85, −75 e −65 conforme a bateria. Um modo explícito que **fixe `PERFORMANCE` independente da banda de bateria** entrega ao usuário a escolha que hoje o app faz por ele: **alcance agora em troca de autonomia depois**. Numa emergência essa é decisão de quem está lá, não do algoritmo.
+
+### Não mexer
+
+- **Aumentar o TTL além de 7.** O custo de flood cresce rápido, e o valor é canônico no protocolo — divergir quebra interoperabilidade sem ganho proporcional.
+
 ## 5. Riscos
 
 | Risco | Severidade | Mitigação |

@@ -19,7 +19,7 @@ Mensagem entregue em segundos é sorte; **entregue em minutos é sucesso**. Quem
 
 **3. Tudo tem de estar pronto ANTES.** Esta é a restrição que organiza o kit inteiro, e a razão é concreta: o Android passou a exigir verificação de identidade do desenvolvedor, e o fluxo para app não verificado impõe **24 horas de atraso** na instalação. Instalar durante o apagão pode simplesmente não funcionar. **Baixar e instalar em plena crise não é plano — é o que falha.**
 
-**4. Bateria é o limite real.** Malha BLE exige anunciar e escanear continuamente, com serviço em primeiro plano ativo. Nenhuma fonte pública que levantei mede esse consumo em aparelhos reais, então trate como custo alto e desconhecido: **power bank é item do kit**, não acessório.
+**4. Bateria é o limite real — e governa o alcance.** Malha BLE exige anunciar e escanear continuamente. Nenhuma fonte pública mede esse consumo em aparelhos reais, então trate como custo alto e desconhecido. Pior: **o app reduz o alcance conforme a bateria cai**, e só usa o modo de maior alcance enquanto está carregando. Energia não é acessório do kit — é o que define até onde você fala. Ver "Como aumentar o alcance".
 
 ---
 
@@ -147,6 +147,37 @@ Também sincroniza por Bluetooth e Wi-Fi, sem servidor central e sem número de 
 | Alcance de quilômetros, infraestrutura zero | Fora deste kit — exige **hardware** (Meshtastic/LoRa). Ver `contexto.md` §3.2 |
 
 ---
+
+## Como aumentar o alcance — sem trocar de aplicativo
+
+Tudo aqui é operacional: vale hoje, com o app como está. A ordem é por ganho.
+
+**1. Mantenha os aparelhos carregando.** É o maior ganho gratuito que existe. O app só usa o modo de maior alcance (`PERFORMANCE`, limiar −95 dBm) **quando o aparelho está carregando**. Sem carregar, ele opera a −85 dBm; abaixo de 20% de bateria cai para −75; abaixo de 10%, para −65 — onde só enxerga quem está quase encostado. **O alcance encolhe conforme a emergência se arrasta.** Power bank não é conforto: é o que mantém o alcance.
+
+**1-A. Energia renovável muda o jogo — compre antes.** O power bank tem fundo; **painel solar e carregador manual (dínamo de manivela) não**. E o efeito não é só manter o aparelho vivo: enquanto houver carga entrando, o app **permanece no modo de maior alcance**. Num apagão prolongado, essa é a diferença entre uma malha que encolhe dia após dia e uma que se mantém.
+
+| Fonte | Serve para | Limites |
+|---|---|---|
+| **Painel solar dobrável (10–20 W)** | Sustentar um aparelho em operação contínua durante o dia e ainda sobrar para recarregar | Depende de sol; rende pouco em dia nublado; inútil à noite |
+| **Carregador manual / dínamo** | Piso garantido: funciona à noite, dentro de casa, com qualquer tempo | Potência baixa — minutos de manivela por minutos de uso. Resgate, não sustentação |
+| **Power bank** | Pico e transporte | Acaba, e não volta |
+
+Dois cuidados práticos:
+
+- **Painel no sol, aparelho na sombra.** Celular exposto ao sol direto superaquece, reduz desempenho e desliga. Deixe só o painel no sol, com o cabo chegando ao aparelho abrigado.
+- **Carga fraca e intermitente** (nuvem passando) pode fazer o aparelho entrar e sair do estado "carregando", oscilando o modo de alcance. Painel com folga de potência é melhor que painel no limite.
+
+**Combinação mais forte deste kit:** aparelho velho + painel solar + janela = **repetidor permanente e autossustentável** (ver item 4). É infraestrutura de verdade, montada com o que estava na gaveta.
+
+**2. App aberto, tela acesa.** Em segundo plano o app é rebaixado para `POWER_SAVER` mesmo com bateria cheia. Na janela de rádio combinada, deixe o app à frente.
+
+**3. Altura e linha de visada.** 2,4 GHz atravessa mal concreto, metal e corpo humano — telefone no bolso perde muito sinal. Um aparelho **na janela, no parapeito, no andar mais alto** alcança incomparavelmente mais que o mesmo aparelho no bolso no térreo. Janela para janela, atravessando a rua, bate parede contra parede.
+
+**4. Transforme aparelhos velhos em repetidores fixos.** Esta é a melhor ideia do kit. Qualquer Android 8.0+ parado na gaveta, com o app instalado, **ligado na tomada ou num power bank e deixado numa janela**, vira um nó permanente da malha. Ele não precisa de chip, nem de conta, nem de alguém operando. Três aparelhos velhos bem posicionados podem ligar dois grupos que não se enxergavam. É a forma mais barata de construir infraestrutura onde ela não existe.
+
+**5. Planeje a corrente, não a potência.** O alcance total é (alcance por salto) × (até 7 saltos) — **mas só se houver alguém em cada trecho**. Cobertura aqui é propriedade da multidão, não do aplicativo. Na prática: é preciso um aparelho ativo a cada 20–30 m no caminho. Mapeie onde estão as pessoas e posicione os repetidores nos vãos.
+
+**6. Use o mensageiro humano de propósito.** Com *store-and-forward*, quem caminha carrega as mensagens no bolso. Combine que alguém percorra uma rota entre dois grupos de tempos em tempos. Isso converte distância em espera — e geograficamente deixa de haver limite.
 
 ## O que este kit não resolve
 
