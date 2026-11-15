@@ -156,18 +156,22 @@ Tudo aqui é operacional: vale hoje, com o app como está. A ordem é por ganho.
 
 **1-A. Energia renovável muda o jogo — compre antes.** O power bank tem fundo; **painel solar e carregador manual (dínamo de manivela) não**. E o efeito não é só manter o aparelho vivo: enquanto houver carga entrando, o app **permanece no modo de maior alcance**. Num apagão prolongado, essa é a diferença entre uma malha que encolhe dia após dia e uma que se mantém.
 
-| Fonte | Serve para | Limites |
+> **O apagão derruba a rede elétrica, não o sol.** Essa é a assimetria que define o planejamento de energia aqui: a geração solar é a única fonte que **o próprio evento não afeta**. O limite dela não é a emergência — é o ciclo dia/noite, que é previsível e se projeta em volta.
+
+| Fonte | Papel | O que considerar |
 |---|---|---|
-| **Painel solar dobrável (10–20 W)** | Sustentar um aparelho em operação contínua durante o dia e ainda sobrar para recarregar | Depende de sol; rende pouco em dia nublado; inútil à noite |
-| **Carregador manual / dínamo** | Piso garantido: funciona à noite, dentro de casa, com qualquer tempo | Potência baixa — minutos de manivela por minutos de uso. Resgate, não sustentação |
-| **Power bank** | Pico e transporte | Acaba, e não volta |
+| **Painel solar dobrável (10–20 W)** | **Fonte.** Sustenta um aparelho em operação contínua de dia e ainda carrega reserva para a noite | Rende menos em dia nublado — dimensione com folga, não no limite |
+| **Power bank** | **Reserva, não fonte.** Carregado de dia pelo painel, atravessa a noite | Sozinho, só adia o problema: esvazia e não volta |
+| **Carregador manual / dínamo** | **Piso garantido.** Independe de sol e de clima, funciona à noite e dentro de casa | Potência baixa: minutos de manivela por minutos de uso. Resgate, não sustentação |
+
+**O arranjo que fecha o ciclo:** painel de dia → power bank como tampão → aparelho operando 24 h. Com isso o repetidor da janela (item 4) deixa de ter prazo de validade. O dínamo é o seguro para a sequência de dias nublados.
 
 Dois cuidados práticos:
 
 - **Painel no sol, aparelho na sombra.** Celular exposto ao sol direto superaquece, reduz desempenho e desliga. Deixe só o painel no sol, com o cabo chegando ao aparelho abrigado.
 - **Carga fraca e intermitente** (nuvem passando) pode fazer o aparelho entrar e sair do estado "carregando", oscilando o modo de alcance. Painel com folga de potência é melhor que painel no limite.
 
-**Combinação mais forte deste kit:** aparelho velho + painel solar + janela = **repetidor permanente e autossustentável** (ver item 4). É infraestrutura de verdade, montada com o que estava na gaveta.
+**Combinação mais forte deste kit:** aparelho velho + painel solar + power bank de tampão + janela = **repetidor permanente e autossustentável** (ver item 4). Enquanto o sol nascer, ele fica de pé — sem rede elétrica, sem operador, sem prazo. É infraestrutura de verdade, montada com o que estava na gaveta.
 
 **2. App aberto, tela acesa.** Em segundo plano o app é rebaixado para `POWER_SAVER` mesmo com bateria cheia. Na janela de rádio combinada, deixe o app à frente.
 
